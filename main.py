@@ -5,7 +5,7 @@ from datetime import datetime
 from chat_logic import chat_with_gemini, clear_chat_history
 from error_handler import ErrorHandler, logger
 
-# Try to import readline for command history (available on Unix systems)
+
 try:
     import readline
     READLINE_AVAILABLE = True
@@ -38,7 +38,7 @@ def save_chat_history(chat_log):
         print("Jarvis: No chat history to save.")
         return
     
-    # Create a filename with timestamp
+    #
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"chat_history_{timestamp}.txt"
     
@@ -59,23 +59,23 @@ def print_with_timestamp(sender, message):
 
 def main():
     """Main function for the command-line interface"""
-    # Store chat history for saving later
+    
     chat_log = []
     
     try:
-        # Print welcome banner
+       
         print("\n" + "="*50)
         print("Welcome to Jarvis AI Assistant (Command Line Interface)")
         print("="*50)
         
-        # Welcome message
+       
         welcome_msg = "Hi, I am Jarvis. How may I help you?"
         log_entry = print_with_timestamp("Jarvis", welcome_msg)
         chat_log.append(log_entry)
         
         print("Type /help to see available commands.\n")
         
-        # Enable command history with up/down arrows if readline is available
+        
         if READLINE_AVAILABLE:
             try:
                 readline.parse_and_bind('"\\e[A": previous-history')
@@ -88,15 +88,15 @@ def main():
                 # Prompt the user for input
                 user_question = input("User: ")
                 
-                # Skip empty input
+                
                 if not user_question.strip():
                     continue
                 
-                # Log user input
+             
                 log_entry = f"User: {user_question}"
                 chat_log.append(log_entry)
                 
-                # Process commands
+        
                 cmd = user_question.lower()
                 if cmd in ["/exit", "/quit", "bye", "exit", "quit"]:
                     farewell = "Goodbye!"
@@ -118,7 +118,7 @@ def main():
                     save_chat_history(chat_log)
                     continue
                 
-                # Get response from AI
+               
                 response = chat_with_gemini(user_question)
                 log_entry = print_with_timestamp("Jarvis", response)
                 chat_log.append(log_entry)
